@@ -1,17 +1,48 @@
 
 package uts.edu.poo.controlador;
 
-import uts.edu.poo.modelo.Conexion;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import uts.edu.poo.vista.FormuilarioCliente;
 import uts.edu.poo.vista.Menu;
 
-public class Controlador {
+
+public class Controlador implements ActionListener {
+    
+    private final Menu menu;
+    private FormuilarioCliente formCliente;
+
+    public Controlador(Menu menu) {
+        
+        this.menu = menu;
+        
+    }
 
     public static void main(String[] args) {
         
-        Menu menu1 = new Menu();
-        menu1.setVisible(true);
-        Conexion conexion1 = new Conexion();
-        conexion1.getConnection();
+        Menu menu = new Menu();
+        Controlador controlador = new Controlador(menu);
+        menu.iniciarListeners(controlador);
+        menu.setVisible(true);
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        String comando = e.getActionCommand();
+        
+        switch (comando) {
+            case "Clientes":
+                
+                formCliente = new FormuilarioCliente();
+                formCliente.setVisible(true);
+                
+                break;
+            default:
+                throw new AssertionError();
+        }
+                
     }
     
 }
