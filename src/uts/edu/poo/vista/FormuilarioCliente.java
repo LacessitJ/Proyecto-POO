@@ -4,6 +4,8 @@ package uts.edu.poo.vista;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class FormuilarioCliente extends JFrame {
+public class FormuilarioCliente extends JFrame implements ActionListener {
     
     private final JPanel panelFondo;
     private final JPanel panelDatos;
@@ -46,6 +48,8 @@ public class FormuilarioCliente extends JFrame {
     private final JButton btnNuevo;
     
     private final JTable tablaDatos;
+    
+    private ActionListener listener;
 
     public FormuilarioCliente() {
         
@@ -144,5 +148,42 @@ public class FormuilarioCliente extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }
+    
+    public JTable tabla(){
         
+        return this.tablaDatos;
+        
+    }
+    
+    public void iniciarListeners(ActionListener listener){
+        
+        this.listener = listener;
+        
+        btnAgreagar.setActionCommand("agregarCliente");
+        btnEditar.setActionCommand("editarCliente");
+        btnDelete.setActionCommand("eliminarCliente");
+        btnListar.setActionCommand("listarCliente");
+        btnNuevo.setActionCommand("nuevoCliente");
+        btnUpdate.setActionCommand("actualizarCliente");
+        
+        btnAgreagar.addActionListener(listener);
+        btnEditar.addActionListener(listener);
+        btnDelete.addActionListener(listener);
+        btnListar.addActionListener(listener);
+        btnNuevo.addActionListener(listener);
+        btnUpdate.addActionListener(listener);
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if (listener != null) {
+            
+            listener.actionPerformed(e);
+            
+        }
+        
+    }
+    
 }

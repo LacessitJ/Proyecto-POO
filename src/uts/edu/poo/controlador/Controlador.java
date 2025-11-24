@@ -21,17 +21,20 @@ public class Controlador implements ActionListener {
     
     DefaultTableModel modelo = new DefaultTableModel();
 
-    public Controlador(Menu menu) {
+    public Controlador(Menu menu, FormuilarioCliente formCliente) {
         
         this.menu = menu;
+        this.formCliente = formCliente;
         
     }
 
     public static void main(String[] args) {
         
         Menu menu = new Menu();
-        Controlador controlador = new Controlador(menu);
+        FormuilarioCliente formcCliente = new FormuilarioCliente();
+        Controlador controlador = new Controlador(menu, formcCliente);
         menu.iniciarListeners(controlador);
+        formcCliente.iniciarListeners(controlador);
         menu.setVisible(true);
         
     }
@@ -66,10 +69,17 @@ public class Controlador implements ActionListener {
         switch (comando) {
             case "Clientes":
                 
-                formCliente = new FormuilarioCliente();
                 formCliente.setVisible(true);
                 
                 break;
+                
+            case "listarCliente":
+                
+                listar(formCliente.tabla());
+                System.out.println("xd");
+                
+                break;
+                
             default:
                 throw new AssertionError();
         }
