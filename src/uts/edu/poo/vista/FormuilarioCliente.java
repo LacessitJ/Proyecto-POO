@@ -4,14 +4,19 @@ package uts.edu.poo.vista;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class FormuilarioCliente extends JFrame {
     
@@ -19,6 +24,9 @@ public class FormuilarioCliente extends JFrame {
     private final JPanel panelDatos;
     private final JPanel panelInDatos;
     private final JPanel panelOperaciones;
+    private final JPanel panelNorth;
+    private final JPanel panelBotones;
+    private final JPanel panelDetalle;
     
     private final JLabel lbId;
     private final JLabel lbName;
@@ -34,6 +42,10 @@ public class FormuilarioCliente extends JFrame {
     private final JButton btnListar;
     private final JButton btnUpdate;
     private final JButton btnDelete;
+    private final JButton btnEditar;
+    private final JButton btnNuevo;
+    
+    private final JTable tablaDatos;
 
     public FormuilarioCliente() {
         
@@ -49,7 +61,7 @@ public class FormuilarioCliente extends JFrame {
         
         panelInDatos = new JPanel();
         panelInDatos.setLayout(new GridLayout(4, 2, 5, 5));
-        panelInDatos.setBorder(new TitledBorder("Ingresar Datos"));
+        panelInDatos.setBorder(new CompoundBorder(new TitledBorder("Ingresar Datos"), new EmptyBorder(5, 10, 5, 10)));
         
         lbId = new JLabel("ID:");
         lbName = new JLabel("Nombre:");
@@ -71,13 +83,26 @@ public class FormuilarioCliente extends JFrame {
         panelInDatos.add(txTel);
         
         panelOperaciones = new JPanel();
-        panelOperaciones.setLayout(new BoxLayout(panelOperaciones, BoxLayout.Y_AXIS));
-        panelOperaciones.setBorder(new TitledBorder("Operaciones"));
+        panelOperaciones.setLayout(new GridLayout(4, 1, 5, 5));
+        panelOperaciones.setBorder(new CompoundBorder(new TitledBorder("Operaciones"), new EmptyBorder(5, 10, 5, 10)));
         
         btnAgreagar = new JButton("AGREGAR");
         btnListar = new JButton("LISTAR");
         btnUpdate = new JButton("UPDATE");
         btnDelete = new JButton("DELETE");
+        
+        panelBotones = new JPanel();
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.X_AXIS));
+        
+        panelNorth = new JPanel();
+        panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
+        
+        btnEditar = new JButton("EDITAR");
+        btnNuevo = new JButton("NUEVO");
+        
+        panelBotones.add(btnEditar);
+        panelBotones.add(Box.createHorizontalStrut(20));
+        panelBotones.add(btnNuevo);
         
         panelOperaciones.add(btnAgreagar);
         panelOperaciones.add(btnListar);
@@ -87,8 +112,32 @@ public class FormuilarioCliente extends JFrame {
         panelDatos.add(panelInDatos);
         panelDatos.add(panelOperaciones);
         
+        panelNorth.add(panelDatos);
+        panelNorth.add(panelBotones);
+        
+        panelDetalle = new JPanel();
+        panelDetalle.setBorder(new TitledBorder("Detalle"));
+        panelDetalle.setLayout(new BorderLayout());
+        
+        String[] columnas = {"ID", "NOMBRE", "TELEFONO", "DIRECCION"};
+        
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+        
+        tablaDatos = new JTable(modelo);
+        
+        tablaDatos.setShowHorizontalLines(true);
+        tablaDatos.setShowVerticalLines(true);
+        
+        JScrollPane scroll = new JScrollPane(tablaDatos);
+        
+        panelDetalle.add(scroll, BorderLayout.CENTER);
+        
+        panelFondo.add(panelNorth, BorderLayout.NORTH);
+        
+        panelFondo.add(panelDetalle, BorderLayout.CENTER);
+        
         Container contenedor = getContentPane();
-        contenedor.add(panelDatos);
+        contenedor.add(panelFondo);
         
         pack();
         setLocationRelativeTo(null);
