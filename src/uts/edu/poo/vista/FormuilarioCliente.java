@@ -159,7 +159,15 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
     
     public int getCedula(){
         
-        return Integer.parseInt(txId.getText());
+        if (txId.getText().isEmpty()) {
+            
+            return 0;
+            
+        }else {
+            
+            return Integer.parseInt(txId.getText());
+            
+        }
         
     }
     
@@ -194,6 +202,30 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
         txName.setText(null);
         txTel.setText(null);
         txDir.setText(null);
+        
+    }
+    
+    public void setCedula(int cedula){
+        
+        this.txId.setText(String.valueOf(cedula));
+        
+    }
+    
+    public void setNomnbre(String nombre){
+        
+        this.txName.setText(nombre);
+        
+    }
+    
+    public void setTelefono(String telefono){
+        
+        this.txTel.setText(telefono);
+        
+    }
+    
+    public void setDireccion(String direccion){
+        
+        this.txDir.setText(direccion);
         
     }
     
