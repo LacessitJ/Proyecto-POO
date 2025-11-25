@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ClienteDAO {
     
@@ -40,6 +41,47 @@ public class ClienteDAO {
         }
         
         return datos;
+        
+    }
+    
+    public int agregar(Cliente c){
+        
+        int r = 0;
+        
+        String sql = "insert into cliente(cedula, nombre, telefono, direccion)values(?,?,?,?)";
+        
+        try {
+            
+            con = conectar.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, c.getCedula());
+            ps.setString(2, c.getNombre());
+            ps.setString(3, c.getTelefono());
+            ps.setString(4, c.getDireccion());
+            
+            r = ps.executeUpdate();
+            
+            if (r == 1) {
+                
+                return 1;
+                
+            }else {
+                
+                return 0;
+                
+            }
+            
+            
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "algo salio mal");
+            e.printStackTrace(); // para ver el error real en consola
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            
+        }
+        
+        return r;
         
     }
     

@@ -32,12 +32,12 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
     
     private final JLabel lbId;
     private final JLabel lbName;
-    private final JLabel lbEmail;
+    private final JLabel lbDir;
     private final JLabel lbTel;
     
     private final JTextField txId;
     private final JTextField txName;
-    private final JTextField txEmail;
+    private final JTextField txDir;
     private final JTextField txTel;
     
     private final JButton btnAgreagar;
@@ -52,6 +52,8 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
     private ActionListener listener;
 
     public FormuilarioCliente() {
+        
+        setTitle("Clientes");
         
         panelFondo = new JPanel();
         
@@ -69,31 +71,31 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
         
         lbId = new JLabel("ID:");
         lbName = new JLabel("Nombre:");
-        lbEmail = new JLabel("Correo:");
         lbTel = new JLabel("Telefono:");
+        lbDir = new JLabel("Direccion:");
         
         txId = new JTextField(20);
         txName = new JTextField(20);
-        txEmail = new JTextField(20);
         txTel = new JTextField(20);
+        txDir = new JTextField(20);
         
         panelInDatos.add(lbId);
         panelInDatos.add(txId);
         panelInDatos.add(lbName);
         panelInDatos.add(txName);
-        panelInDatos.add(lbEmail);
-        panelInDatos.add(txEmail);
         panelInDatos.add(lbTel);
         panelInDatos.add(txTel);
+        panelInDatos.add(lbDir);
+        panelInDatos.add(txDir);
         
         panelOperaciones = new JPanel();
         panelOperaciones.setLayout(new GridLayout(4, 1, 5, 5));
         panelOperaciones.setBorder(new CompoundBorder(new TitledBorder("Operaciones"), new EmptyBorder(5, 10, 5, 10)));
         
-        btnAgreagar = new JButton("AGREGAR");
+        btnAgreagar = new JButton("CREAR");
         btnListar = new JButton("LISTAR");
-        btnUpdate = new JButton("UPDATE");
-        btnDelete = new JButton("DELETE");
+        btnUpdate = new JButton("ACTUALIZAR");
+        btnDelete = new JButton("ELIMINAR");
         
         panelBotones = new JPanel();
         panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.X_AXIS));
@@ -152,6 +154,46 @@ public class FormuilarioCliente extends JFrame implements ActionListener {
     public JTable tabla(){
         
         return this.tablaDatos;
+        
+    }
+    
+    public int getCedula(){
+        
+        return Integer.parseInt(txId.getText());
+        
+    }
+    
+    public String getNombre(){
+        
+        return txName.getText();
+        
+    }
+    
+    public String getTelefono(){
+        
+        return txTel.getText();
+        
+    }
+    
+    public String getDireccion(){
+        
+        return txDir.getText();
+        
+    }
+    
+    public void limpiarTabla(){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatos.getModel();
+        modelo.setRowCount(0);
+        
+    }
+    
+    public void limpiarRegistros(){
+        
+        txId.setText(null);
+        txName.setText(null);
+        txTel.setText(null);
+        txDir.setText(null);
         
     }
     

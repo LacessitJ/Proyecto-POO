@@ -10,11 +10,12 @@ import uts.edu.poo.modelo.ClienteDAO;
 import uts.edu.poo.vista.FormuilarioCliente;
 import uts.edu.poo.vista.Menu;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class Controlador implements ActionListener {
     
     private final Menu menu;
-    private FormuilarioCliente formCliente;
+    private final FormuilarioCliente formCliente;
     
     ClienteDAO dao = new ClienteDAO();
     Cliente c = new Cliente();
@@ -60,6 +61,31 @@ public class Controlador implements ActionListener {
         tabla.setRowMargin(10);
         
     }
+    
+    public void agregar(){
+        
+        int cedula = formCliente.getCedula();
+        String nombre = formCliente.getNombre();
+        String telefono = formCliente.getTelefono();
+        String direccion = formCliente.getDireccion();
+        c.setCedula(cedula);
+        c.setNombre(nombre);
+        c.setTelefono(telefono);
+        c.setDireccion(direccion);
+        
+        int r = dao.agregar(c);
+        
+        if (r == 1) {
+            
+            JOptionPane.showMessageDialog(formCliente, "Usuario agregado con exito");
+            
+        }else {
+            
+            JOptionPane.showMessageDialog(formCliente, "Error");
+            
+        }
+        
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -75,8 +101,17 @@ public class Controlador implements ActionListener {
                 
             case "listarCliente":
                 
+                formCliente.limpiarTabla();
                 listar(formCliente.tabla());
-                System.out.println("xd");
+                
+                break;
+                
+            case "agregarCliente":
+                
+                agregar();
+                formCliente.limpiarTabla();
+                listar(formCliente.tabla());
+                formCliente.limpiarRegistros();
                 
                 break;
                 
