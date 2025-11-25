@@ -143,6 +143,24 @@ public class Controlador implements ActionListener {
         }
         
     }
+    
+    public void eliminar(){
+        
+        int fila = formCliente.tabla().getSelectedRow();
+        
+        if (fila == -1) {
+            
+            JOptionPane.showMessageDialog(formCliente, "Debe seleccionar una fila");
+            
+        }else {
+            
+            int id = Integer.parseInt((String) formCliente.tabla().getValueAt(fila, 0).toString());
+            dao.eliminar(id);
+            JOptionPane.showMessageDialog(formCliente, "Usuario eliminado");
+            
+        }
+        
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -181,8 +199,17 @@ public class Controlador implements ActionListener {
             case "actualizarCliente":
                 
                 actualizar();
+                formCliente.limpiarTabla();
+                listar(formCliente.tabla());
+                formCliente.limpiarRegistros();
                 
                 break;
+                
+            case "eliminarCliente":
+                
+                eliminar();
+                formCliente.limpiarTabla();
+                listar(formCliente.tabla());
                 
             default:
                 throw new AssertionError();

@@ -124,4 +124,22 @@ public class ClienteDAO {
         
     }
     
+    public int eliminar(int id){
+        
+        int r = 0;
+        String sql = "delete from cliente where cedula=" + id;
+        
+        try{
+            
+            con = conectar.getConnection();
+            ps = con.prepareStatement(sql);
+            r = ps.executeUpdate();
+                
+        }catch (Exception e) {
+        }
+        
+        return r;
+        
+    }
+    
 }
