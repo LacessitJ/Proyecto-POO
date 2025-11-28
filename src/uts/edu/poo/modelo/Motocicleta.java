@@ -4,11 +4,11 @@ package uts.edu.poo.modelo;
 public class Motocicleta {
     
     private String placa;
-    private int modelo;
+    private String modelo;
     private String nMotor;
     private int cedulaCliente;
 
-    public Motocicleta(String placa, int modelo, String nMotor, int cedulaCliente) {
+    public Motocicleta(String placa, String modelo, String nMotor, int cedulaCliente) {
         this.placa = placa;
         this.modelo = modelo;
         this.nMotor = nMotor;
@@ -26,11 +26,11 @@ public class Motocicleta {
         this.placa = placa;
     }
 
-    public int getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(int modelo) {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 

@@ -8,14 +8,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class ClienteDAO {
-    
+public class MotoDAO {
+ 
     PreparedStatement ps;
     ResultSet rs;
     Connection con;
     Conexion conectar = new Conexion();
+    Motocicleta m;
     Cliente c;
-    
+
     public List listar(){
         
         List<Cliente> datos = new ArrayList<>();
@@ -23,7 +24,7 @@ public class ClienteDAO {
         try {
             
             con = conectar.getConnection(); 
-            ps = con.prepareStatement("select * from cliente");
+            ps = con.prepareStatement("select cedula, nombre from cliente");
             rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -31,8 +32,6 @@ public class ClienteDAO {
                 c = new Cliente();
                 c.setCedula(rs.getInt(1));
                 c.setNombre(rs.getString(2));
-                c.setTelefono(rs.getString( 3));
-                c.setDireccion(rs.getString(4));
                 datos.add(c);
                 
             }
@@ -44,20 +43,48 @@ public class ClienteDAO {
         
     }
     
-    public int agregar(Cliente c){
+    public List listarMotos(){
+        
+        List<Motocicleta> datos = new ArrayList<>();
+        
+        try {
+            
+            con = conectar.getConnection(); 
+            ps = con.prepareStatement("select * from motocicleta");
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                
+                m = new Motocicleta();
+                m.setPlaca(rs.getString(1));
+                m.setModelo(rs.getString(2));
+                m.setnMotor(rs.getString( 3));
+                m.setCedulaCliente(rs.getInt(4));
+                datos.add(m);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return datos;
+        
+    }
+    
+    public int agregar(Motocicleta m){
         
         int r = 0;
         
-        String sql = "insert into cliente(cedula, nombre, telefono, direccion)values(?,?,?,?)";
+        String sql = "insert into motocicleta(placa, modelo, numero_motor, cedula_cliente)values(?,?,?,?)";
         
         try {
             
             con = conectar.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getCedula());
-            ps.setString(2, c.getNombre());
-            ps.setString(3, c.getTelefono());
-            ps.setString(4, c.getDireccion());
+            ps.setString(1, m.getPlaca());
+            ps.setString(2, m.getModelo());
+            ps.setString(3, m.getnMotor());
+            ps.setInt(4, m.getCedulaCliente());
             
             r = ps.executeUpdate();
             
@@ -83,20 +110,20 @@ public class ClienteDAO {
         
     }
     
-    public int actualizar(Cliente c){
+    public int actualizarMoto(Motocicleta m){
         
         int r = 0;
-        String sql = "update cliente set cedula=?, nombre=?, telefono=?, direccion=? where cedula=?";
+        String sql = "update motocicleta set placa=?, modelo=?, numero_motor=?, cedula_cliente=? where placa=?";
         
         try {
             
             con = conectar.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getCedula());
-            ps.setString(2, c.getNombre());
-            ps.setString(3, c.getTelefono());
-            ps.setString(4, c.getDireccion());
-            ps.setInt(5, c.getCedula());
+            ps.setString(1, m.getPlaca());
+            ps.setString(2, m.getModelo());
+            ps.setString(3, m.getnMotor());
+            ps.setInt(4, m.getCedulaCliente());
+            ps.setString(5, m.getPlaca());
             
             r = ps.executeUpdate();
             
@@ -122,15 +149,16 @@ public class ClienteDAO {
         
     }
     
-    public int eliminar(int id){
+    public int eliminarMoto(String placa){
         
         int r = 0;
-        String sql = "delete from cliente where cedula=" + id;
+        String sql = "delete from motocicleta where placa = ?";
         
         try{
             
             con = conectar.getConnection();
             ps = con.prepareStatement(sql);
+            ps.setString(1, placa);
             r = ps.executeUpdate();
                 
         }catch (Exception e) {
